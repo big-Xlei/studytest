@@ -84,7 +84,7 @@ public class HttpUtil {
         return new AsyncResult<String>(result);
     }
 
-    public String postResult(String url, Map<String, String> paramsMap, Map body,Map<String,String> headsMap) {
+    public String postResult(String url, Map<String, String> paramsMap, Map<String,String> body,Map<String,String> headsMap) {
         // 获得Http客户端(可以理解为:你得先有一个浏览器;注意:实际上HttpClient与浏览器是不一样的)
         CloseableHttpClient httpClient = createIgnoreSSLHttpClient();
         String result = "";

@@ -8,6 +8,7 @@ import com.xl.study.studytest.common.response.BaseResponse;
 import com.xl.study.studytest.jwt.JwtTokenUtil;
 import com.xl.study.studytest.redis.utils.RedisUtil;
 import lombok.extern.slf4j.Slf4j;
+import org.apache.shiro.authz.annotation.RequiresPermissions;
 import org.apache.shiro.authz.annotation.RequiresRoles;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
@@ -53,6 +54,13 @@ public class UserInfoController {
     @RequiresRoles({"admin"})
     @GetMapping("/add")
     public BaseResponse add(){
+        return BaseResponse.responseSuccess("success");
+    }
+
+    @RequiresRoles({"admin"})
+    @RequiresPermissions("user:permissions")
+    @GetMapping("/permiss")
+    public BaseResponse permissions(){
         return BaseResponse.responseSuccess("success");
     }
 }
