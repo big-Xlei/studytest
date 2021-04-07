@@ -22,7 +22,7 @@ spring:
   redis:
     host: 47.100.42.207
     port: 6379
-    password: xl123
+    password:
 
 server:
   address: 0.0.0.0
