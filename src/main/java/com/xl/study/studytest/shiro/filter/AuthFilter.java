@@ -19,7 +19,10 @@ public class AuthFilter extends AuthenticatingFilter {
     @Override
     protected AuthenticationToken createToken(ServletRequest servletRequest, ServletResponse servletResponse) throws Exception {
         String token = JwtTokenUtil.getRequestToken((HttpServletRequest) servletRequest);
-        return new AuthToken(token);
+        AuthToken authToken = new AuthToken(token);
+        authToken.isRememberMe();
+        String s = authToken.getPrincipal().toString();
+        return authToken;
     }
 
     @Override

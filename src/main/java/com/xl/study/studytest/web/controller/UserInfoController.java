@@ -63,4 +63,10 @@ public class UserInfoController {
     public BaseResponse permissions(){
         return BaseResponse.responseSuccess("success");
     }
+
+    @RequiresRoles({"user"})
+    @GetMapping("/user")
+    public BaseResponse userper(){
+        return BaseResponse.responseSuccess("success");
+    }
 }
