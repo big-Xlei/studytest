@@ -20,7 +20,7 @@ spring:
     maxOpenPreparedStatements: 20
 
   redis:
-    host: 47.100.42.207
+    host: 127.0.0.1
     port: 6379
     password:
 

@@ -13,9 +13,9 @@ import java.sql.ResultSet;
  */
 
 public class Jdbctream {
-    private String url ="jdbc:mysql://localhost:3306/taotao?rewriteBatchedStatements=true";
+    private String url ="jdbc:mysql://localhost:10089/dor_manage?rewriteBatchedStatements=true";
     private String user ="root";
-    private String password ="123";
+    private String password ="password";
     @Test
     public void jdbcInsert(){
         Connection conn =null;
@@ -24,12 +24,13 @@ public class Jdbctream {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = (Connection) DriverManager.getConnection(url,user,password);
-            String sql ="INSERT INTO tab_user2(id,user_name,age,job,sal) VALUES(null,?,60,'演员',?)";
+            String sql ="insert into permission_info(user_id,table_name,columns) VALUES(?,?,?)";
             pstm = (PreparedStatement) conn.prepareStatement(sql);
             long start = System.currentTimeMillis();
             for (int i =0; i <200000; i++) {
-                pstm.setString(1,"周润发"+i);
-                pstm.setDouble(2,300000+i);
+                pstm.setInt(1,i);
+                pstm.setString(2,"测试");
+                pstm.setString(3,"测试"+i);
                 pstm.addBatch();
             }
             pstm.executeBatch();
