@@ -9,9 +9,8 @@ import org.springframework.web.bind.annotation.RestController;
 import javax.annotation.PostConstruct;
 import java.util.TimeZone;
 
-@RestController
+
 @SpringBootApplication
-@EnableRetry
 public class StudytestApplication {
 
     public static void main(String[] args) {
@@ -20,10 +19,5 @@ public class StudytestApplication {
     @PostConstruct
     void setDefaultTimezone() {
         TimeZone.setDefault(TimeZone.getTimeZone("Asia/Shanghai"));
-    }
-
-    @RequestMapping("/test")
-    public Object test(){
-        return "test";
     }
 }

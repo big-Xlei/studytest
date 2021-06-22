@@ -1,3 +1,4 @@
+/*
 package com.xl.study.studytest.shiro.config;
 
 import com.xl.study.studytest.shiro.filter.AuthFilter;
@@ -38,13 +39,15 @@ public class ShiroConfig {
         shiroFilterFactoryBean.setFilters(filters);
 
         //添加shiro的内置过滤器
-        /*
+        */
+/*
             anon:无需认证就可以访问
             authc:必须认证才能访问
             user:必须拥有记住我功能才能使用
             perms:拥有对某个资源的权限才能访问
             roles:拥有某个角色的权限才能访问
-         */
+         *//*
+
         LinkedHashMap<String, String> filterMap = new LinkedHashMap<>();
         filterMap.put("/user/login","anon");
 //        filterMap.put("/user/add","roles[admin]");
@@ -89,13 +92,15 @@ public class ShiroConfig {
         return new UserSecondRealm();
     }
 
-    /**
+    */
+/**
      * 开启shiro aop注解支持.
      * 使用代理方式;所以需要开启代码支持;
      *
      * @param securityManager
      * @return
-     */
+     *//*
+
     @Bean
     public AuthorizationAttributeSourceAdvisor authorizationAttributeSourceAdvisor(SecurityManager securityManager) {
         AuthorizationAttributeSourceAdvisor advisor = new AuthorizationAttributeSourceAdvisor();
@@ -111,3 +116,4 @@ public class ShiroConfig {
     }
 }
 
+*/

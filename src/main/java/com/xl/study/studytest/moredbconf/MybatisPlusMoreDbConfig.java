@@ -1,3 +1,4 @@
+/*
 package com.xl.study.studytest.moredbconf;
 
 import com.alibaba.druid.spring.boot.autoconfigure.DruidDataSourceBuilder;
@@ -21,7 +22,7 @@ import java.util.Map;
 
 @EnableTransactionManagement //开启事务
 @Configuration  //spring中常用到注解，与xml配置相对立。是两种加载bean方式
-@MapperScan("com.maicedata.yuhang.population.dao.*") // 扫描mapperdao的地址
+@MapperScan("com.xl.study.studytest.dao.*") // 扫描mapperdao的地址
 public class MybatisPlusMoreDbConfig {
 
     @Bean
@@ -43,11 +44,13 @@ public class MybatisPlusMoreDbConfig {
         return DruidDataSourceBuilder.create().build();
     }
 
-    /**
+    */
+/**
      * 动态数据源配置
      *
      * @return
-     */
+     *//*
+
     @Bean
     @Primary
     public DataSource multipleDataSource(@Qualifier("pgsql") DataSource pgsql,
@@ -64,6 +67,7 @@ public class MybatisPlusMoreDbConfig {
     @Bean("sqlSessionFactory")
     public SqlSessionFactory sqlSessionFactory() throws Exception {
         MybatisSqlSessionFactoryBean sqlSessionFactory = new MybatisSqlSessionFactoryBean();
+        //打开Configuration就不会报错了
         sqlSessionFactory.setDataSource(multipleDataSource(pgsql(), mysql()));
 
         MybatisConfiguration configuration = new MybatisConfiguration();
@@ -80,7 +84,8 @@ public class MybatisPlusMoreDbConfig {
         return sqlSessionFactory.getObject();
     }
 
- /*   @Bean
+ */
+/*   @Bean
     public GlobalConfiguration globalConfiguration() {
         GlobalConfiguration conf = new GlobalConfiguration(new LogicSqlInjector());
         conf.setLogicDeleteValue("-1");
@@ -90,5 +95,8 @@ public class MybatisPlusMoreDbConfig {
         conf.setDbColumnUnderline(true);
         conf.setRefresh(true);
         return conf;
-    }*/
+    }*//*
+
 }
+
+*/
