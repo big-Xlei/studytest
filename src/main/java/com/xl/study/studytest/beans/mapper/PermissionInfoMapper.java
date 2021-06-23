@@ -11,6 +11,6 @@ import java.util.List;
 @Mapper
 public interface PermissionInfoMapper extends BaseMapper<PermissionInfo> {
     Cursor<PermissionInfo> getPermissionInfos();
-    int putPermissionInfos(@Param("list") List<PermissionInfo> list);
+    void putPermissionInfos(@Param("list") List<PermissionInfo> list);
 
 }

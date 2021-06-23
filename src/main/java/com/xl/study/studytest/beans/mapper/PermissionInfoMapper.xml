@@ -13,7 +13,7 @@
         select id,user_id,table_name,columns from permission_info;
     </select>
 
-    <!--<insert id="putPermissionInfos" parameterType="BasePermissionInfo">
+    <insert id="putPermissionInfos" parameterType="java.util.List">
         insert into permission_info(user_id,table_name,columns)
         values
         <foreach collection="list" index="index" item="PermissionInfo" separator=",">
@@ -21,7 +21,7 @@
             #{PermissionInfo.userId},#{PermissionInfo.tableName},#{PermissionInfo.columns}
             )
         </foreach>
-    </insert>-->
+    </insert>
 
 
 </mapper>
