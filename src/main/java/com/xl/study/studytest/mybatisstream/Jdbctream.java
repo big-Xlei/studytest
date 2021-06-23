@@ -13,7 +13,7 @@ import java.sql.ResultSet;
  */
 
 public class Jdbctream {
-    private String url ="jdbc:mysql://localhost:10089/dor_manage?rewriteBatchedStatements=true";
+    private String url ="jdbc:mysql://localhost:10089/dor_manage?characterEncoding=utf-8&rewriteBatchedStatements=true";
     private String user ="root";
     private String password ="password";
     @Test
@@ -24,7 +24,7 @@ public class Jdbctream {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = (Connection) DriverManager.getConnection(url,user,password);
-            String sql ="insert into permission_info(user_id,table_name,columns) VALUES(?,?,?)";
+            String sql =" insert into permission_info(\"user_id\",\"table_name\",\"columns\") VALUES(?,?,?) ";
             pstm = (PreparedStatement) conn.prepareStatement(sql);
             long start = System.currentTimeMillis();
             for (int i =0; i <200000; i++) {
