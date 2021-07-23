@@ -24,7 +24,7 @@ public class Jdbctream {
         try {
             Class.forName("com.mysql.jdbc.Driver");
             conn = (Connection) DriverManager.getConnection(url,user,password);
-            String sql =" insert into permission_info(\"user_id\",\"table_name\",\"columns\") VALUES(?,?,?) ";
+            String sql =" insert into permission_info(user_id,table_names,columnss) VALUES(?,?,?) ";
             pstm = (PreparedStatement) conn.prepareStatement(sql);
             long start = System.currentTimeMillis();
             for (int i =0; i <200000; i++) {

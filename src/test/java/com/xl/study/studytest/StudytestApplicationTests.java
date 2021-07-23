@@ -50,8 +50,8 @@ class StudytestApplicationTests {
         try(
                SqlSession sqlSession = sqlSessionFactory.openSession()
         ) {
-            final PermissionInfoMapper mapper = sqlSession.getMapper(PermissionInfoMapper.class);
-            final Cursor<PermissionInfo> permissionInfos = mapper.getPermissionInfos();
+            PermissionInfoMapper mapper = sqlSession.getMapper(PermissionInfoMapper.class);
+            Cursor<PermissionInfo> permissionInfos = mapper.getPermissionInfos();
             for (PermissionInfo permissionInfo : permissionInfos) {
                 System.out.println(permissionInfo.toString());
             }
