@@ -1,0 +1,22 @@
+spring:
+  aop:
+    proxy-target-class: true
+    auto: true
+  datasource:
+    druid:
+      pgsql:
+        url: jdbc:postgresql://127.0.0.1:5432/yhrkk?useSSL=false&allowMultiQueries=true
+        username: username
+        password: password
+        driver-class-name: org.postgresql.Driver
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
+      mysql:
+        url: jdbc:mysql://127.0.0.1:3306/yh_syrkk?characterEncoding=utf8&serverTimezone=UTC&allowMultiQueries=true
+        username: username
+        password: password
+        driver-class-name: com.mysql.cj.jdbc.Driver
+        initialSize: 5
+        minIdle: 5
+        maxActive: 20
