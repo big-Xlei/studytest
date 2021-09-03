@@ -1,6 +1,6 @@
 spring:
   datasource:
-    url: jdbc:mysql://127.0.0.1:10089/dor_manage?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useAffectedRows=true&allowMultiQueries=true
+    url: jdbc:mysql://47.100.42.207:3306/dor_manage?characterEncoding=utf-8&useSSL=false&serverTimezone=GMT%2B8&useAffectedRows=true&allowMultiQueries=true
     driver-class-name: com.mysql.cj.jdbc.Driver
     username: root
     password: password
@@ -19,24 +19,32 @@ spring:
     poolPreparedStatements: true
     maxOpenPreparedStatements: 20
 
-  redis:
-    host: 127.0.0.1
-    port: 6379
-    password: xl123
+#  redis:
+#    host: 127.0.0.1
+#    port: 6379
+#    password: xl123
 
-server:
-  address: 0.0.0.0
-  port: 8888
+#server:
+#  address: 0.0.0.0
+#  port: 8888
 
 #OSS参数配置
-oss:
-  ossEndpoint:
-  accessKeyId:
-  accessKeySecret:
-  bucketName:
+#oss:
+#  ossEndpoint:
+#  accessKeyId:
+#  accessKeySecret:
+#  bucketName:
 
 #日志
 logging:
   level:
+    com.xl.study.studytest.beans.mapper: debug
     com.xl.study.studytest.shiro.beans.mapper: debug
+
+snmp:
+  verson: 2
+  address: 192.168.1.20/161
+  community: public
+  retries: 5
+  timeout: 10000
 
