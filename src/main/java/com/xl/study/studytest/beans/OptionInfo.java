@@ -75,4 +75,8 @@ public class OptionInfo implements Serializable {
      * 1-启用，2-禁用
      */
     private Integer optionStatus;
+
+    public void tt(){
+        System.out.println("这是OptionInfo");
+    }
 }

@@ -14,4 +14,11 @@ import java.util.List;
 public class OptionInfoExtends extends OptionInfo {
     @JsonIgnoreProperties(value = { "hibernateLazyInitializer", "handler" })
     private List lists;
+
+    @Override
+    public void tt() {
+        System.out.println("这是OPtionInfoEx也就是子类");
+    }
+
+
 }

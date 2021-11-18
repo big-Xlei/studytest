@@ -1,6 +1,7 @@
 package com.xl.study.studytest.snmp;
 
 import com.baomidou.mybatisplus.core.toolkit.StringUtils;
+import org.junit.Test;
 import org.snmp4j.CommunityTarget;
 import org.snmp4j.PDU;
 import org.snmp4j.Snmp;
@@ -11,11 +12,14 @@ import org.snmp4j.mp.SnmpConstants;
 import org.snmp4j.smi.*;
 import org.snmp4j.transport.DefaultUdpTransportMapping;
 
+import java.math.BigDecimal;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
+import java.util.*;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
+
 import java.io.IOException;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.TimeUnit;
 /**
@@ -38,8 +42,8 @@ public class SnmpUtils {
         target.setCommunity(new OctetString(community));
         target.setAddress(address);
         target.setVersion(SnmpConstants.version2c);
-        target.setTimeout(3000);
-        target.setRetries(5);
+        target.setTimeout(2000);
+        target.setRetries(1);
         return target;
     }
 
@@ -71,7 +75,6 @@ public class SnmpUtils {
                 for (VariableBinding vb : response.getVariableBindings()) {
                     Map<String, String> map = new HashMap<String, String>();
                     map.put(oid, vb.toValueString());
-                    System.out.println(vb.toValueString()+"+++");
                     list.add(map);
                 }
             }
@@ -207,7 +210,7 @@ public class SnmpUtils {
                 }
                 finished = checkWalkFinished(targetOID, pdu, vb);
                 if (!finished) {
-                    System.out.println(vb.getOid() + " = " + vb.getVariable());
+//                    System.out.println(vb.getOid() + " = " + vb.getVariable());
                     pdu.setRequestID(new Integer32(0));
                     pdu.set(0, vb);
                     map.put(vb.getOid().toString(), vb.getVariable().toString());
@@ -246,7 +249,7 @@ public class SnmpUtils {
             System.out.println("[true] vb.getOid().size() < targetOID.size()");
             finished = true;
         } else if (targetOID.leftMostCompare(targetOID.size(), vb.getOid()) != 0) {
-            System.out.println("[true] targetOID.leftMostCompare() != 0");
+//            System.out.println("[true] targetOID.leftMostCompare() != 0");
             finished = true;
         } else if (Null.isExceptionSyntax(vb.getVariable().getSyntax())) {
             System.out.println("[true] Null.isExceptionSyntax(vb.getVariable().getSyntax())");
@@ -307,5 +310,79 @@ public class SnmpUtils {
         }
     }
 
+    @Test
+    public void ttttt(){
+        String local = "127.0.0.1";
+        String netBridge="virbr";
 
+        String netIndexOid = ".1.3.6.1.2.1.4.20.1.2";
+        String netDescOid = ".1.3.6.1.2.1.2.2.1.2";
+        String netTypeOid = ".1.3.6.1.2.1.2.2.1.3";
+        String netSpeedOid = ".1.3.6.1.2.1.2.2.1.5";
+        String netMacAddrOid = ".1.3.6.1.2.1.2.2.1.6";
+        String netStateOid = ".1.3.6.1.2.1.2.2.1.8";
+        String netInOctetsOid = ".1.3.6.1.2.1.2.2.1.10";
+        String netOutOctetsOid = ".1.3.6.1.2.1.2.2.1.16";
+        String svrIp = "192.168.1.114";
+
+
+        Map<String, String> netDescMap = snmpWalk(svrIp, "public", "161", netDescOid);
+        System.out.println("网卡描述 " + netDescMap);
+
+        Map<String, String> netIndexMap = snmpWalk(svrIp, "public", "161", netIndexOid);
+        System.out.println("网卡index " + netIndexMap);
+
+        Map<String, String> netTypeMap = snmpWalk(svrIp, "public", "161", netTypeOid);
+        System.out.println("网卡type " + netTypeMap);
+
+        Map<String, String> netSpeedMap = snmpWalk(svrIp, "public", "161", netSpeedOid);
+        System.out.println("网卡speed " + netSpeedMap);
+
+        Map<String, String> netMacAddrMap = snmpWalk(svrIp, "public", "161", netMacAddrOid);
+        System.out.println("网卡MacAddr " + netMacAddrMap);
+
+        Map<String, String> netStateMap = snmpWalk(svrIp, "public", "161", netStateOid);
+        System.out.println("网卡state " + netStateMap);
+
+        Map<String, String> netInOctetsMap = snmpWalk(svrIp,  "public", "161", netInOctetsOid);
+        System.out.println("第一次网卡接收字节数 " + netInOctetsMap);
+
+        Map<String, String> netOutOctetsMap = snmpWalk(svrIp, "public", "161", netOutOctetsOid);
+        System.out.println("第一次网卡发送字节数 " + netOutOctetsMap);
+
+        for (Map.Entry<String, String> ipAndIndexEntry : netIndexMap.entrySet()) {
+            String key = ipAndIndexEntry.getKey();
+            String ip = key.substring(netIndexOid.length());
+            String index = ipAndIndexEntry.getValue();
+            String arm = netDescOid.substring(1)+ "." + index;
+
+            String netDesc = netDescMap.get(arm);
+            netDesc = getChinese(netDesc);
+            if (netDesc == null || netDesc.contains(netBridge) || ip.equals(local) ){
+                continue;
+            }
+
+            String netType = netTypeMap.get(netTypeOid.substring(1) + "."+ index);
+            String netSpeed = netSpeedMap.get(netSpeedOid.substring(1) + "." + index);
+            String netMacAddr = netMacAddrMap.get(netMacAddrOid.substring(1) + "." + index);
+            String netState = netStateMap.get(netStateOid.substring(1) + "." + index);
+            String firstnetInOctets = netInOctetsMap.get(netInOctetsOid.substring(1) + "." + index);
+            System.out.println(firstnetInOctets);
+            String firsetnetOutOctets = netOutOctetsMap.get(netOutOctetsOid.substring(1) + "." + index);
+            System.out.println(firsetnetOutOctets);
+            System.out.println("数据对象："+ip+"_"+netDesc+"_"+netType+"_"+netSpeed+"_"+netMacAddr+"_"+netState+"_"+firsetnetOutOctets+"_"+firstnetInOctets);
+
+        }
+
+        // 出和入方向速度15秒更新一次(15s 计算一次 kb/s；历史数据为5min 计算一次)
+    }
+
+    @Test
+    public void testtt(){
+
+        Map<String, String> aPublic1 = snmpWalk("192.168.1.10", "public", "161", ".1.3.6.1.2.1.2.2.1.2");
+        System.out.println(aPublic1);
+        Map<String, String> aPublic2 = snmpWalk("192.168.1.10", "public", "161", ".1.3.6.1.2.1.2.2.1.10");
+        System.out.println(aPublic2);
+    }
 }

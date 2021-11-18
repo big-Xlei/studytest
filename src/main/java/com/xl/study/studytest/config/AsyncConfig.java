@@ -21,6 +21,8 @@ public class AsyncConfig implements AsyncConfigurer {
         taskExecutor.setMaxPoolSize(20);
         // 线程队列最大线程数
         taskExecutor.setQueueCapacity(2000);
+        //等待所有线程结束后关闭线程池子
+        taskExecutor.setWaitForTasksToCompleteOnShutdown(true);
         // 初始化
         taskExecutor.initialize();
         return taskExecutor;
